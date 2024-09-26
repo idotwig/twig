@@ -192,7 +192,7 @@
             const classes = parseInt(document.getElementById('classes').value);
             const canceledClasses = parseInt(document.getElementById('canceledClasses').value);
 
-            if (!subject || !classes || isNaN(classes) || !canceledClasses || isNaN(canceledClasses)) {
+            if (!subject || isNaN(classes) || isNaN(canceledClasses)) {
                 document.getElementById('result').innerText = "נא למלא את כל השדות.";
                 return;
             }
