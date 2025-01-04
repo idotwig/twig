@@ -152,18 +152,6 @@
             sendPassword(email, password);
         }
 
-        function sendPassword(email, password) {
-            emailjs.send('default_service', 'template_ism64zx', {
-                email: email,
-                password: password
-            })
-            .then(function(response) {
-               console.log('SUCCESS!', response.status, response.text);
-            }, function(error) {
-               console.log('FAILED...', error);
-               document.getElementById('auth-error').innerText = "שגיאה בשליחת אימייל.";
-            });
-        }
 
         function signIn() {
             const email = document.getElementById('email').value;
